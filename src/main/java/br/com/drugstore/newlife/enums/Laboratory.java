@@ -12,10 +12,10 @@ public enum Laboratory {
     PFIZER("Pfizer", 6);
 
     private String name;
-    private final int type;
+    private final int code;
 
-    Laboratory(String name, int type) {
+    Laboratory(String name, int code) {
         this.name = name;
-        this.type = type;
+        this.code = code;
     }
 }

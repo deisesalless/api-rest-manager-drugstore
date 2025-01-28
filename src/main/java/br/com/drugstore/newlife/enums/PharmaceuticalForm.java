@@ -11,10 +11,10 @@ public enum PharmaceuticalForm {
     RETAL("Retal", 5);
 
     private final String name;
-    private final int type;
+    private final int code;
 
-    PharmaceuticalForm(String name, int type) {
+    PharmaceuticalForm(String name, int code) {
         this.name = name;
-        this.type = type;
+        this.code = code;
     }
 }

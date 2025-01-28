@@ -1,5 +1,6 @@
 package br.com.drugstore.newlife;
 
+import br.com.drugstore.newlife.enums.PharmaceuticalForm;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
