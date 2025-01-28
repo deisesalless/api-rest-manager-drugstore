@@ -1,16 +1,20 @@
 package br.com.drugstore.newlife.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.drugstore.newlife.dto.MedicationCreateDTO;
+import br.com.drugstore.newlife.dto.MedicationCreatedDTO;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/remedio")
 public class MedicationController {
 
-    @PostMapping
-    public void create(@RequestBody String json) {
+    @PostMapping("/cadastrar")
+    public MedicationCreatedDTO create(@RequestBody MedicationCreateDTO dto) {
+        return null;
+    }
 
+    @GetMapping()
+    public MedicationCreatedDTO findAll() {
+        return null;
     }
 }
