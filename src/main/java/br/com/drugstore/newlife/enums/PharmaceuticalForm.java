@@ -2,6 +2,8 @@ package br.com.drugstore.newlife.enums;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum PharmaceuticalForm {
     ORAL("Oral", 1),
@@ -16,5 +18,24 @@ public enum PharmaceuticalForm {
     PharmaceuticalForm(String name, int code) {
         this.name = name;
         this.code = code;
+    }
+
+    public Integer convertDataToCode(PharmaceuticalForm data) {
+        return (data != null) ? data.getCode() : null;
+    }
+
+    public String convertIntToString(int code) {
+        return Arrays.stream(PharmaceuticalForm.values())
+                .filter(form -> form.getCode() == code)
+                .findFirst()
+                .map(PharmaceuticalForm::getName)
+                .orElseThrow(() -> new IllegalArgumentException("Código inválido: " + code));
+    }
+
+    public PharmaceuticalForm fromCode(int code) {
+        return Arrays.stream(PharmaceuticalForm.values())
+                .filter(form -> form.getCode() == code)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Código inválido: " + code));
     }
 }
