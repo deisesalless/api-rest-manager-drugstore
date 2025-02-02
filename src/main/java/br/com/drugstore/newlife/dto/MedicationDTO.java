@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record MedicationDTO(UUID id, String name, String concentration, PharmaceuticalForm pharmaceuticalForm,
-                            Laboratory loboratory, LocalDate expirationDate, Double salePrice)  {
+                            Laboratory laboratory, LocalDate expirationDate, Double salePrice)  {
 }
 
 // Concentração (concentration): Quantidade do princípio ativo por unidade (ex: 500 mg, 10 mg/mL).

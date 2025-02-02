@@ -16,6 +16,8 @@ public class MedicationService {
 
     @Autowired
     private MedicationRepository repository;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     public MedicationDTO saveMedication(MedicationCreateDTO dto) {
