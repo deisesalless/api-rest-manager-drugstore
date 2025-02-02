@@ -33,7 +33,7 @@ public class MedicationService {
     public List<MedicationDTO> findAllMedications() {
         return repository.findAll().stream()
                 .map(medication -> objectMapper.convertValue(
-                        medication, MedicationDTO.class)).collect(Collectors.toList());
+                        medication, MedicationDTO.class)).toList();
     }
 
     public MedicationDTO updateMedication(MedicationDTO dto, UUID id) {
