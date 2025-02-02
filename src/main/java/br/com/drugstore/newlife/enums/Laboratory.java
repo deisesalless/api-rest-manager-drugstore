@@ -1,10 +1,12 @@
 package br.com.drugstore.newlife.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
 
 @Getter
+@AllArgsConstructor
 public enum Laboratory {
     EMS("EMS", 1),
     ACHE("Aché", 2),
@@ -13,19 +15,10 @@ public enum Laboratory {
     CRISTALIA("Cristalia", 5),
     PFIZER("Pfizer", 6);
 
-    private String name;
+    private final String name;
     private final int code;
 
-    Laboratory(String name, int code) {
-        this.name = name;
-        this.code = code;
-    }
-
-    public Integer convertDataToCode(Laboratory data) {
-        return (data != null) ? data.getCode() : null;
-    }
-
-    public String convertIntToString(int code) {
+    public static String getNameByCode(int code) {
         return Arrays.stream(Laboratory.values())
                 .filter(lab -> lab.getCode() == code)
                 .findFirst()
@@ -33,7 +26,7 @@ public enum Laboratory {
                 .orElseThrow(() -> new IllegalArgumentException("Código inválido: " + code));
     }
 
-    public Laboratory fromCode(int code) {
+    public static Laboratory fromCode(int code) {
         return Arrays.stream(Laboratory.values())
                 .filter(lab -> lab.getCode() == code)
                 .findFirst()

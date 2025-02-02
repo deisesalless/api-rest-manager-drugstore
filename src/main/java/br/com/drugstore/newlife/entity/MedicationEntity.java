@@ -1,5 +1,7 @@
 package br.com.drugstore.newlife.entity;
 
+import br.com.drugstore.newlife.converter.LaboratoryConverter;
+import br.com.drugstore.newlife.converter.PharmaceuticalFormConverter;
 import br.com.drugstore.newlife.enums.Laboratory;
 import br.com.drugstore.newlife.enums.PharmaceuticalForm;
 import jakarta.persistence.*;
@@ -19,11 +21,11 @@ public class MedicationEntity {
     private String name;
     private String concentration;
 
-    @Convert(converter = PharmaceuticalForm.class)
+    @Convert(converter = PharmaceuticalFormConverter.class)
     private PharmaceuticalForm pharmaceuticalForm;
 
-    @Convert(converter = Laboratory.class)
-    private Laboratory loboratory;
+    @Convert(converter = LaboratoryConverter.class)
+    private Laboratory laboratory;
 
     private LocalDate expirationDate;
     private Double salePrice;
