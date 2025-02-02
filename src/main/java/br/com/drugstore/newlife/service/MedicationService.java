@@ -30,7 +30,7 @@ public class MedicationService {
     }
 
 
-    public List<MedicationDTO> findAllMedication() {
+    public List<MedicationDTO> findAllMedications() {
         return repository.findAll().stream()
                 .map(medication -> objectMapper.convertValue(
                         medication, MedicationDTO.class)).collect(Collectors.toList());
