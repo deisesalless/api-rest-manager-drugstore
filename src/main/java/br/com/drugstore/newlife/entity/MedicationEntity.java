@@ -27,6 +27,9 @@ public class MedicationEntity {
     @Convert(converter = LaboratoryConverter.class)
     private Laboratory laboratory;
 
+    private LocalDate registrationDate;
     private LocalDate expirationDate;
+    private Integer quantityInStock;
+    private Double costPrice;
     private Double salePrice;
 }

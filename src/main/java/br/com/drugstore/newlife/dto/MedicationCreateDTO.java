@@ -30,13 +30,13 @@ public record MedicationCreateDTO(
         LocalDate expirationDate,
 
         @NotNull
-        int quantityInStock,
+        Integer quantityInStock,
 
         @NotNull
-        double costPrice,
+        Double costPrice,
 
         @NotNull
-        double salePrice) {
+        Double salePrice) {
 }
 
 // Concentração (concentration): Quantidade do princípio ativo por unidade (ex: 500 mg, 10 mg/mL).
