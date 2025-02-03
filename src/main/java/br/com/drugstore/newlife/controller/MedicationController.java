@@ -3,6 +3,7 @@ package br.com.drugstore.newlife.controller;
 import br.com.drugstore.newlife.dto.MedicationCreateDTO;
 import br.com.drugstore.newlife.dto.MedicationCreatedDTO;
 import br.com.drugstore.newlife.dto.MedicationDTO;
+import br.com.drugstore.newlife.dto.MedicationUpdateDTO;
 import br.com.drugstore.newlife.service.MedicationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,11 @@ public class MedicationController {
     @GetMapping("/listar")
     public ResponseEntity<List<MedicationDTO>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllMedications());
+    }
+
+    @PutMapping("/alterar")
+    public ResponseEntity<Void> updateMedications(@RequestBody @Valid MedicationUpdateDTO dto) {
+        service.updateMedication(dto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
