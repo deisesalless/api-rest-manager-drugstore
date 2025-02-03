@@ -3,44 +3,38 @@ package br.com.drugstore.newlife.dto;
 import br.com.drugstore.newlife.enums.Laboratory;
 import br.com.drugstore.newlife.enums.PharmaceuticalForm;
 import jakarta.persistence.Convert;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
 public record MedicationCreateDTO(
-        @NotBlank
+        @NotBlank(message = "O campo NAME não pode estar vazio ou nulo")
         String name,
 
-        @NotBlank
+        @NotBlank(message = "O campo CONCENTRATION não pode estar vazio ou nulo")
         String concentration,
 
+        @NotNull(message = "O campo PHARMACEUTICAL FORM não pode ser nulo")
         @Convert(converter = PharmaceuticalForm.class)
         PharmaceuticalForm pharmaceuticalForm,
 
+        @NotNull(message = "O campo LABORATORY não pode ser nulo")
         @Convert(converter = Laboratory.class)
         Laboratory laboratory,
 
-        @PastOrPresent
+        @PastOrPresent(message = "A data de registro deve ser a data atual ou do passado")
         LocalDate registrationDate,
 
-        @Future
+        @Future(message = "A data de validade deve estar no futuro")
         LocalDate expirationDate,
 
-        @NotNull
+        @NotNull(message = "O campo QUANTITY não pode ser nulo")
+        @Positive(message = "O campo QUANTITY deve ser maior que zero")
         Integer quantityInStock,
 
-        @NotNull
+        @NotNull(message = "O campo COST PRICE não pode ser nulo")
         Double costPrice,
 
-        @NotNull
+        @NotNull(message = "O campo SALE PRICE não pode ser nulo")
         Double salePrice) {
 }
-
-// Concentração (concentration): Quantidade do princípio ativo por unidade (ex: 500 mg, 10 mg/mL).
-// Forma Farmacêutica (pharmaceuticalForm): Forma de apresentação (ex: comprimido, cápsula, xarope, injetável).
-// Quantidade em Estoque (quantityInStock): Quantidade disponível no estoque.
-// Preço de Custo (costPrice): Preço de compra do medicamento.
-// Preço de Venda (salePrice): Preço de venda ao consumidor.
