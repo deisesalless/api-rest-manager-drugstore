@@ -3,6 +3,7 @@ package br.com.drugstore.newlife.service;
 import br.com.drugstore.newlife.dto.MedicationCreateDTO;
 import br.com.drugstore.newlife.dto.MedicationCreatedDTO;
 import br.com.drugstore.newlife.dto.MedicationDTO;
+import br.com.drugstore.newlife.dto.MedicationUpdateDTO;
 import br.com.drugstore.newlife.entity.MedicationEntity;
 import br.com.drugstore.newlife.repository.MedicationRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,16 @@ public class MedicationService {
                         medication, MedicationDTO.class)).toList();
     }
 
-    public MedicationDTO updateMedication(MedicationDTO dto, UUID id) {
+    @Transactional
+    public MedicationDTO updateMedication(MedicationUpdateDTO dto) {
+        boolean found = repository.existsById(dto.id());
+
+        if (found) {
+            MedicationEntity medicationEntity = objectMapper.convertValue(dto, MedicationEntity.class);
+            medicationEntity = repository.save(medicationEntity);
+            return objectMapper.convertValue(medicationEntity, MedicationDTO.class);
+        }
+
         return null;
     }
 
@@ -44,8 +55,5 @@ public class MedicationService {
         repository.deleteById(id);
     }
 
-    private MedicationEntity findMedicationById(UUID id) {
-        return null;
-    }
 
 }
