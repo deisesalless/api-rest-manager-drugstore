@@ -32,4 +32,5 @@ public class MedicationEntity {
     private Integer quantityInStock;
     private Double costPrice;
     private Double salePrice;
+    private Boolean isActive;
 }
