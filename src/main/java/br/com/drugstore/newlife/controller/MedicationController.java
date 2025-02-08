@@ -9,34 +9,35 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/remedio")
+@RequestMapping("/remedios")
 public class MedicationController {
 
     @Autowired
     private MedicationService service;
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public ResponseEntity<MedicationCreatedDTO> create(@RequestBody @Valid MedicationCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.saveMedication(dto));
     }
 
-    @GetMapping("/listar-medicamentos-ativos")
+    @GetMapping("/listar-ativos")
     public ResponseEntity<List<MedicationDTO>> findAllActiveMedications() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllActiveMedications());
     }
 
-    @GetMapping("/listar-medicamentos-inativos")
+    @GetMapping("/listar-inativos")
     public ResponseEntity<List<MedicationDTO>> findAllSoftDeletedMedications() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllSoftDeletedMedications());
     }
 
-    @PutMapping("/alterar")
+    @PutMapping
     public ResponseEntity<Void> updateMedications(@RequestBody @Valid MedicationUpdateDTO dto) {
         service.updateMedication(dto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
