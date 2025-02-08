@@ -32,5 +32,7 @@ public class MedicationEntity {
     private Integer quantityInStock;
     private Double costPrice;
     private Double salePrice;
-    private Boolean active;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
