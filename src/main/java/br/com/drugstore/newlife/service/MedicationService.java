@@ -32,8 +32,15 @@ public class MedicationService {
     }
 
 
-    public List<MedicationDTO> findAllMedications() {
-        return repository.findAll().stream()
+    public List<MedicationDTO> findAllActiveMedications() {
+        return repository.findAllActiveMedications().stream()
+                .map(medication -> objectMapper.convertValue(
+                        medication, MedicationDTO.class)).toList();
+    }
+
+    public List<MedicationDTO> findAllSoftDeletedMedications() {
+        // testar de outra forma aqui
+        return repository.findAllByActiveFalse().stream()
                 .map(medication -> objectMapper.convertValue(
                         medication, MedicationDTO.class)).toList();
     }
@@ -41,18 +48,27 @@ public class MedicationService {
     @Transactional
     public MedicationDTO updateMedication(MedicationUpdateDTO dto) {
         boolean found = repository.existsById(dto.id());
+        if (!found) return null;
 
-        if (found) {
-            MedicationEntity medicationEntity = objectMapper.convertValue(dto, MedicationEntity.class);
-            medicationEntity = repository.save(medicationEntity);
-            return objectMapper.convertValue(medicationEntity, MedicationDTO.class);
-        }
-
-        return null;
+        MedicationEntity medicationEntity = objectMapper.convertValue(dto, MedicationEntity.class);
+        medicationEntity = repository.save(medicationEntity);
+        return objectMapper.convertValue(medicationEntity, MedicationDTO.class);
     }
 
-    public void deleteMedication(UUID id) {
-        repository.deleteById(id);
+    @Transactional
+    public void softDelete(UUID id) {
+        boolean found = repository.existsById(id);
+        //if (!found) return false;
+
+        repository.softDelete(id);
+    }
+
+    @Transactional
+    public void reactivate(UUID id) {
+        boolean found = repository.existsById(id);
+        //if (!found) return false;
+
+        repository.reactivate(id);
     }
 
 
