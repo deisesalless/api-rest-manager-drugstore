@@ -42,5 +42,7 @@ public record MedicationUpdateDTO(
         Double costPrice,
 
         @NotNull(message = "O campo SALE PRICE não pode ser nulo")
-        Double salePrice) {
+        Double salePrice,
+
+        Boolean isActive) {
 }

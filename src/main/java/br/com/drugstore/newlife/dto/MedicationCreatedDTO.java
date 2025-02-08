@@ -16,5 +16,6 @@ public record MedicationCreatedDTO(
         LocalDate expirationDate,
         Integer quantityInStock,
         Double costPrice,
-        Double salePrice) {
+        Double salePrice,
+        Boolean active) {
 }
