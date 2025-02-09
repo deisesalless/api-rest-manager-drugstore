@@ -44,11 +44,21 @@ public class MedicationService {
 
     @Transactional
     public MedicationDTO updateMedication(UUID id, MedicationUpdateDTO dto) {
-        boolean found = repository.existsById(id);
-        if (!found) return null;
+        Optional<MedicationEntity> optionalMedication = repository.findById(id);
 
-        MedicationEntity medicationEntity = objectMapper.convertValue(dto, MedicationEntity.class);
+        if (optionalMedication.isEmpty()) return null; // Lançar exception personalizada
+
+        MedicationEntity medicationEntity = optionalMedication.get();
+        medicationEntity.setName(dto.name());
+        medicationEntity.setConcentration(dto.concentration());
+        medicationEntity.setPharmaceuticalForm(dto.pharmaceuticalForm());
+        medicationEntity.setLaboratory(dto.laboratory());
+        medicationEntity.setExpirationDate(dto.expirationDate());
+        medicationEntity.setQuantityInStock(dto.quantityInStock());
+        medicationEntity.setCostPrice(dto.costPrice());
+        medicationEntity.setSalePrice(dto.salePrice());
         medicationEntity = repository.save(medicationEntity);
+
         return objectMapper.convertValue(medicationEntity, MedicationDTO.class);
     }
 
