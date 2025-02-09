@@ -32,6 +32,11 @@ public class MedicationController {
         return ResponseEntity.created(location).body(createdMedication);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<MedicationDTO> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
     @GetMapping
     public ResponseEntity<List<MedicationDTO>> findAll(@RequestParam(required = false) Boolean active) {
         return ResponseEntity.ok(service.findAllMedications(active));

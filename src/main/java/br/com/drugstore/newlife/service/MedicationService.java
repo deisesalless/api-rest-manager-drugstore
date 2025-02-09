@@ -43,6 +43,12 @@ public class MedicationService {
                 objectMapper.convertValue(medication, MedicationDTO.class)).toList();
     }
 
+    public MedicationDTO findById(UUID id) {
+         Optional<MedicationEntity> medicationEntity = repository.findById(id);
+        if (medicationEntity.isEmpty()) return null;
+        else return objectMapper.convertValue(medicationEntity, MedicationDTO.class);
+    }
+
     @Transactional
     public MedicationDTO updateMedication(UUID id, MedicationUpdateDTO dto) {
         Optional<MedicationEntity> optionalMedication = repository.findById(id);
@@ -65,11 +71,10 @@ public class MedicationService {
 
     @Transactional
     public void updateStatus(UUID id, boolean active) {
-        MedicationEntity medicationEntity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Medication not found with id: " + id));
+        MedicationDTO dto = findById(id);
 
-        if (active) repository.reactivate(id);
-        else repository.softDelete(id);
+        if (dto != null && active) repository.reactivate(id);
+        if (dto != null) repository.reactivate(id);
 
     }
 
