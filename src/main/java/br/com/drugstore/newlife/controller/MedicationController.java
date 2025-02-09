@@ -6,14 +6,10 @@ import br.com.drugstore.newlife.dto.MedicationDTO;
 import br.com.drugstore.newlife.dto.MedicationUpdateDTO;
 import br.com.drugstore.newlife.service.MedicationService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.yaml.snakeyaml.events.Event;
 
 import java.net.URI;
 import java.util.List;
