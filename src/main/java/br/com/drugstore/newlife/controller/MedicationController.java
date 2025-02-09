@@ -6,12 +6,16 @@ import br.com.drugstore.newlife.dto.MedicationDTO;
 import br.com.drugstore.newlife.dto.MedicationUpdateDTO;
 import br.com.drugstore.newlife.service.MedicationService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.yaml.snakeyaml.events.Event;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,34 +28,41 @@ public class MedicationController {
 
     @PostMapping
     public ResponseEntity<MedicationCreatedDTO> create(@RequestBody @Valid MedicationCreateDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveMedication(dto));
+        MedicationCreatedDTO createdMedication = service.saveMedication(dto);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(createdMedication.id()).toUri();
+
+        return ResponseEntity.created(location).body(createdMedication);
     }
 
-    @GetMapping("/listar-ativos")
-    public ResponseEntity<List<MedicationDTO>> findAllActiveMedications() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findAllActiveMedications());
+    @GetMapping
+    public ResponseEntity<List<MedicationDTO>> findAll(@RequestParam(required = false) Boolean active) {
+        return ResponseEntity.ok(service.findAllMedications(active));
     }
 
-    @GetMapping("/listar-inativos")
-    public ResponseEntity<List<MedicationDTO>> findAllSoftDeletedMedications() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findAllSoftDeletedMedications());
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateMedications(@PathVariable UUID id, @RequestBody @Valid MedicationUpdateDTO dto) {
+        service.updateMedication(id, dto);
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<Void> updateMedications(@RequestBody @Valid MedicationUpdateDTO dto) {
-        service.updateMedication(dto);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+    // forma correta
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<Void> updateStatus(@PathVariable UUID id, @RequestParam boolean ativo) {
+//        service.updateStatus(id, ativo);
+//        return ResponseEntity.noContent().build();
+//    }
 
     @PatchMapping("/inativar/{id}")
     public ResponseEntity<Void> softDelete(@PathVariable UUID id) {
         service.softDelete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/ativar/{id}")
     public ResponseEntity<Void> reactivate(@PathVariable UUID id) {
         service.reactivate(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 }

@@ -32,22 +32,19 @@ public class MedicationService {
     }
 
 
-    public List<MedicationDTO> findAllActiveMedications() {
-        return repository.findAllActiveMedications().stream()
-                .map(medication -> objectMapper.convertValue(
-                        medication, MedicationDTO.class)).toList();
-    }
+    public List<MedicationDTO> findAllMedications(Boolean active) {
+        List<MedicationEntity> medications;
 
-    public List<MedicationDTO> findAllSoftDeletedMedications() {
-        // testar de outra forma aqui
-        return repository.findAllByActiveFalse().stream()
-                .map(medication -> objectMapper.convertValue(
-                        medication, MedicationDTO.class)).toList();
+        if (active == null) medications = repository.findAll(); // Retorna todos os medicamentos
+        else medications = repository.findByActive(active); // Filtra por ativos/inativos
+
+        return medications.stream().map(medication ->
+                objectMapper.convertValue(medication, MedicationDTO.class)).toList();
     }
 
     @Transactional
-    public MedicationDTO updateMedication(MedicationUpdateDTO dto) {
-        boolean found = repository.existsById(dto.id());
+    public MedicationDTO updateMedication(UUID id, MedicationUpdateDTO dto) {
+        boolean found = repository.existsById(id);
         if (!found) return null;
 
         MedicationEntity medicationEntity = objectMapper.convertValue(dto, MedicationEntity.class);
