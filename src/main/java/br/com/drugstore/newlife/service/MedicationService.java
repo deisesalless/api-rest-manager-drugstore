@@ -7,6 +7,7 @@ import br.com.drugstore.newlife.dto.MedicationUpdateDTO;
 import br.com.drugstore.newlife.entity.MedicationEntity;
 import br.com.drugstore.newlife.repository.MedicationRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,19 +64,13 @@ public class MedicationService {
     }
 
     @Transactional
-    public void softDelete(UUID id) {
-        boolean found = repository.existsById(id);
-        //if (!found) return false;
+    public void updateStatus(UUID id, boolean active) {
+        MedicationEntity medicationEntity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Medication not found with id: " + id));
 
-        repository.softDelete(id);
-    }
+        if (active) repository.reactivate(id);
+        else repository.softDelete(id);
 
-    @Transactional
-    public void reactivate(UUID id) {
-        boolean found = repository.existsById(id);
-        //if (!found) return false;
-
-        repository.reactivate(id);
     }
 
 

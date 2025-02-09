@@ -47,22 +47,9 @@ public class MedicationController {
         return ResponseEntity.noContent().build();
     }
 
-    // forma correta
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<Void> updateStatus(@PathVariable UUID id, @RequestParam boolean ativo) {
-//        service.updateStatus(id, ativo);
-//        return ResponseEntity.noContent().build();
-//    }
-
-    @PatchMapping("/inativar/{id}")
-    public ResponseEntity<Void> softDelete(@PathVariable UUID id) {
-        service.softDelete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/ativar/{id}")
-    public ResponseEntity<Void> reactivate(@PathVariable UUID id) {
-        service.reactivate(id);
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Void> updateStatus(@PathVariable UUID id, @RequestParam boolean active) {
+        service.updateStatus(id, active);
         return ResponseEntity.noContent().build();
     }
 }
