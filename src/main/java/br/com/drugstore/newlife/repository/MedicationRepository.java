@@ -17,10 +17,6 @@ public interface MedicationRepository extends JpaRepository<MedicationEntity, UU
     List<MedicationEntity> findByActive(@Param("active") Boolean active);
 
     @Modifying
-    @Query("UPDATE tb_medication m SET m.is_active = false WHERE m.id = :id")
-    void softDelete(@Param("id") UUID id);
-
-    @Modifying
-    @Query("UPDATE tb_medication m SET m.is_active = true WHERE m.id = :id")
+    @Query("UPDATE MedicationEntity m SET m.isActive = true WHERE m.id = :id")
     void reactivate(@Param("id") UUID id);
 }
