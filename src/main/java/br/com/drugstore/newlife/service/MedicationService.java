@@ -73,8 +73,8 @@ public class MedicationService {
     public void updateStatus(UUID id, boolean active) {
         MedicationDTO dto = findById(id);
 
-        if (dto != null && active) repository.reactivate(id);
-        if (dto != null) repository.reactivate(id);
+        if (!repository.existsById(id)) throw new EntityNotFoundException("Medicação não encontrada para o ID: " + id);
+        repository.updateActiveStatus(id, active);
 
     }
 

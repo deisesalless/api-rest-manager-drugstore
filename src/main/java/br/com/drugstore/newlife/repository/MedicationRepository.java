@@ -17,6 +17,7 @@ public interface MedicationRepository extends JpaRepository<MedicationEntity, UU
     List<MedicationEntity> findByActive(@Param("active") Boolean active);
 
     @Modifying
-    @Query("UPDATE MedicationEntity m SET m.isActive = true WHERE m.id = :id")
-    void reactivate(@Param("id") UUID id);
+    @Query("UPDATE MedicationEntity m SET m.isActive = :isActive WHERE m.id = :id")
+    void updateActiveStatus(@Param("id") UUID id, @Param("isActive") boolean isActive);
+
 }
