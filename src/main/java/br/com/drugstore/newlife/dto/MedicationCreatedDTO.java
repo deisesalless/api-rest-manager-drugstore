@@ -17,5 +17,5 @@ public record MedicationCreatedDTO(
         Integer quantityInStock,
         Double costPrice,
         Double salePrice,
-        Boolean active) {
+        Boolean isActive) {
 }

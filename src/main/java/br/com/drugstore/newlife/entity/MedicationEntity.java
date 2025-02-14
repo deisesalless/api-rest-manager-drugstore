@@ -22,17 +22,23 @@ public class MedicationEntity {
     private String concentration;
 
     @Convert(converter = PharmaceuticalFormConverter.class)
+    @Column(columnDefinition = "TINYINT(1)")
     private PharmaceuticalForm pharmaceuticalForm;
 
     @Convert(converter = LaboratoryConverter.class)
+    @Column(columnDefinition = "TINYINT(1)")
     private Laboratory laboratory;
 
     private LocalDate registrationDate;
+
     private LocalDate expirationDate;
+
     private Integer quantityInStock;
+
     private Double costPrice;
+
     private Double salePrice;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(name = "is_active", columnDefinition = "TINYINT(1)")
+    private Boolean isActive = true;
 }

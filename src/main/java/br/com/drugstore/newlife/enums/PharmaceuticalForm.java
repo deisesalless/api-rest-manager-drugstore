@@ -12,7 +12,8 @@ public enum PharmaceuticalForm {
     NASAL("Nasal", 2),
     VENOSO("Venoso", 3),
     INTRAMUSCULAR("Intramuscular", 4),
-    RETAL("Retal", 5);
+    RETAL("Retal", 5),
+    INJETAVEL("Injetavel", 6);
 
     private final String name;
     private final int code;
